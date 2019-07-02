@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "foo/cmd"
+import "github.com/rustyeddy/store/cmd"
 
 func main() {
   cmd.Execute()

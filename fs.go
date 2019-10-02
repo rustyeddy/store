@@ -142,11 +142,11 @@ func (fs *FileStore) Exists(name string) bool {
 
 // Save will create the file if it does not already exist, if the file
 // does exist it will be updated.
-func (fs *FileStore) Save(name string, gobj interface{}) (res bool) {
-	if fs.Exists() {
-		res = fs.Update(name, gobj)
+func (fs *FileStore) Save(name string, gobj interface{}) (err error) {
+	if fs.Exists(name) {
+		err = fs.Update(name, gobj)
 	} else {
-		res = fs.Create(name, gobj)
+		err = fs.Create(name, gobj)
 	}
-	return res
+	return err
 }

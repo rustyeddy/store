@@ -23,6 +23,7 @@ type Store interface {
 	ReadObject(name string, obj interface{}) error
 	Update(name string, obj interface{})
 	Delete(name string) error
+	Save(name, obj interface{})
 }
 
 // Configuration handles all configuration items

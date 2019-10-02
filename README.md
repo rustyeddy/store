@@ -1,11 +1,25 @@
 # A Simple Object Storage Library
 
 This library is used to Read and Write _Go Objects_ to and from the
-filesystem. By default the objects are written as serialized as JSON,
+filesystem (persistance). By default the objects are written as serialized as JSON,
 and if they are JSON, they are read and de-serialized into the
 corresponding Go object being read by the application.
 
 ## Using Store
+
+Store provides the following very simple interface:
+
+```go
+type Store interface {
+	Create(name string, obj interface{}) (interface{}, error)
+	ReadObject(name string, obj interface{}) error
+	Update(name string, obj interface{})
+	Delete(name string) error
+}
+```
+
+Anything that provides the above interface can be used as a backend.  For example, we can add AWS S3, 
+Digital Ocean storage and Google Cloud Project.
 
 ```go
 package main 

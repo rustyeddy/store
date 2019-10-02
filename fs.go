@@ -39,6 +39,11 @@ func UseFileStore(path string) (fs *FileStore, err error) {
 	return fs, nil
 }
 
+// Path will tell us of the location on the filesystem
+func (fs *FileStore) Path() string {
+	return fs.Basepath
+}
+
 // Create takes the provided Go object, converts it to a JSON string
 // (or mimetype), then stores it under the given object name.
 func (fs *FileStore) Create(name string, gobj interface{}) (err error) {
@@ -135,7 +140,13 @@ func (fs *FileStore) Exists(name string) bool {
 	return true
 }
 
-// Path will tell us of the location on the filesystem
-func (fs *FileStore) Path() string {
-	return fs.Basepath
+// Save will create the file if it does not already exist, if the file
+// does exist it will be updated.
+func (fs *FileStore) Save(name string, gobj interface{}) (res bool) {
+	if fs.Exists() {
+		res = fs.Update(name, gobj)
+	} else {
+		res = fs.Create(name, gobj)
+	}
+	return res
 }

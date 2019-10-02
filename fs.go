@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 )
 
-// Filestore is a container that satisfies the Store interface
+// FileStore is a container that satisfies the Store interface
 type FileStore struct {
 	Name     string // Name of the File store
 	Basepath string // Path to storage directory
@@ -97,7 +97,6 @@ func (fs *FileStore) ReadObject(name string, gobj interface{}) (err error) {
 // Update will replace the contents of the named object with the whole
 // of the new object.
 func (fs *FileStore) Update(name string, gobj interface{}) (err error) {
-
 	// Update is opposite of create. Update errors if the file does not exist
 	if !fs.Exists(fs.Basepath + "/" + name) {
 		return fmt.Errorf("Update: File Does Exists")
@@ -122,12 +121,13 @@ func (fs *FileStore) Update(name string, gobj interface{}) (err error) {
 	return err
 }
 
+// Delete handles the removal of the specified file
 func (fs *FileStore) Delete(name string) (err error) {
 	err = os.RemoveAll(fs.Basepath + "/" + name)
 	return err
 }
 
-// Index returns a map for each object name that may point to a storage object
+// Exists will tell of if the named storage file exists
 func (fs *FileStore) Exists(name string) bool {
 	if _, err := os.Stat(name); os.IsNotExist(err) {
 		return false
@@ -135,6 +135,7 @@ func (fs *FileStore) Exists(name string) bool {
 	return true
 }
 
+// Path will tell us of the location on the filesystem
 func (fs *FileStore) Path() string {
 	return fs.Basepath
 }

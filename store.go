@@ -1,6 +1,6 @@
 /*
 
-Store is a simple CRUD library that applications can use to
+Package store is a simple CRUD library that applications can use to
 read and write Go objects as JSON.  Store can also be used to
 store and track other data types, like gif and PDFs.
 
@@ -17,6 +17,7 @@ import (
 	"time"
 )
 
+// Store defines how use this package
 type Store interface {
 	Create(name string, obj interface{}) (interface{}, error)
 	ReadObject(name string, obj interface{}) error
@@ -24,6 +25,7 @@ type Store interface {
 	Delete(name string) error
 }
 
+// Configuration handles all configuration items
 type Configuration struct {
 	Debug bool
 }
@@ -36,9 +38,8 @@ func init() {
 	config.Debug = false
 }
 
-// Extract a Name of an object or a filesystem path to determine
-// the actual name of the object.  This is basically just a file or
-// directory name.
+// NameFromPath will extract the name of an object. This is basically just a
+// file or directory name.
 func NameFromPath(path string) (name string) {
 	_, fname := filepath.Split(path)
 	dir := filepath.Dir(path)

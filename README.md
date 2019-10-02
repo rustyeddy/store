@@ -5,16 +5,6 @@ filesystem. By default the objects are written as serialized as JSON,
 and if they are JSON, they are read and de-serialized into the
 corresponding Go object being read by the application.
 
-## Plugins!
-
-This library takes plugins that extend the type and location Store can
-used to save objects, plugins may also extend the format(s) objects
-can be stored as.
-
-For example, by default Go object will be saved on the local
-filesystem as JSON objects.  A plugin may read and write .CSV objects
-from _Digital Ocean Spaces_.
-
 ## Using Store
 
 ```go

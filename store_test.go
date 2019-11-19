@@ -1,20 +1,12 @@
 package store
 
 import (
-	"os"
 	"testing"
 )
 
 type ExpectString struct {
 	Input  string
 	Expect string
-}
-
-// RemoveDir does what it sounds like it does
-func RemoveDir(tpath string) string {
-	os.RemoveAll(tpath)
-	os.MkdirAll(tpath, 0755)
-	return tpath
 }
 
 func TestNameFromPath(t *testing.T) {

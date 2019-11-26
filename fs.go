@@ -166,7 +166,7 @@ func (fs *FileStore) List() (names []string) {
 	}
 
 	for _, file := range files {
-		fs.Items = append(fs.Names, file.Name())
+		fs.Names = append(fs.Names, file.Name())
 	}
 	return fs.Names
 }

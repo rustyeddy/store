@@ -2,9 +2,14 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/gorilla/mux"
+	"github.com/rustyeddy/store"
+	log "github.com/sirupsen/logrus"
 )
 
 // spaHandler implements the http.Handler interface, so we can use it
@@ -56,6 +61,19 @@ func handleHealth(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleStore(w http.ResponseWriter, r *http.Request) {
-	names := storage.List()
+	var ex bool
+	var name string
+
+	vars := mux.Vars(r)
+	if name, ex = vars["name"]; !ex {
+		log.Warningln("Error Request missing parameter name")
+		fmt.Fprintf(w, "Request Missing Host")
+		return
+	}
+	st, err := store.UseFileStore(name)
+	if err != nil {
+		log.Errorf("Failed to get base %s store: %s, err: %v", st.Basepath, name, err)
+	}
+	names := st.List()
 	json.NewEncoder(w).Encode(names)
 }

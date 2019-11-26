@@ -21,7 +21,7 @@ var (
 
 func init() {
 	name = flag.String("name", "default", "The name of the storage")
-	base = flag.String("base", "/srv/storge", "The base directory for the stores")
+	base = flag.String("base", "/srv/storage", "The base directory for the stores")
 	addr = flag.String("addr", "0.0.0.0:3333", "Address and port to run on")
 }
 
@@ -42,15 +42,14 @@ func main() {
 	spa := spaHandler{staticPath: "pub", indexPath: "index.html"}
 	router.PathPrefix("/").Handler(spa)
 
-	addr := "0.0.0.0:8444"
 	srv := &http.Server{
 		Handler: router,
-		Addr:    addr,
+		Addr:    *addr,
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
-	log.Infof("Store spa listing for connections: %s ", addr)
+	log.Infof("Store spa listing for connections: %s ", *addr)
 	log.Fatal(srv.ListenAndServe())
 }

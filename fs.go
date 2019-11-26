@@ -154,13 +154,13 @@ func (fs *FileStore) Save(name string, gobj interface{}) (err error) {
 }
 
 // List will provide a list of all elements in storage
-func (fs *FileStore) List() (names []string) {
+func (fs *FileStore) List(path string) (names []string) {
 
 	if fs.Names != nil {
 		return fs.Names
 	}
 
-	files, err := ioutil.ReadDir(fs.Basepath)
+	files, err := ioutil.ReadDir(path)
 	if err != nil {
 		log.Fatal(err)
 	}

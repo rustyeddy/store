@@ -65,3 +65,7 @@ func timeStamp() string {
 	ts := time.Now().UTC().Format(time.RFC3339)
 	return strings.Replace(ts, ":", "", -1) // get rid of offesnive colons
 }
+
+func ListStores() []string {
+
+}

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"mime"
 	"net/http"
 	"os"
@@ -15,6 +16,7 @@ type FileStore struct {
 	Name     string // Name of the File store
 	Basepath string // Path to storage directory
 	Comment  string // Some useful comment
+	Items    []string
 }
 
 // UseFileStore creates and returns a new storage container.  If a dir
@@ -149,4 +151,22 @@ func (fs *FileStore) Save(name string, gobj interface{}) (err error) {
 		err = fs.Create(name, gobj)
 	}
 	return err
+}
+
+// List will provide a list of all elements in storage
+func (fs *FileStore) List() (names []string) {
+
+	if fs.Items != nil {
+		return fs.Items
+	}
+
+	files, err := ioutil.ReadDir(fs.Basepath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, file := range files {
+		fs.Items = append(fs.Items, file.Name())
+	}
+	return fs.Items
 }

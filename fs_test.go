@@ -69,6 +69,11 @@ func TestCRUD(t *testing.T) {
 		t.Errorf("ReadObject expected (Changed) got (%s)", st3.Comment)
 	}
 
+	names := st.List()
+	if len(names) != 1 {
+		t.Errorf("names expected (SuperStore.json) got (%+v)", names)
+	}
+
 	// Now test Delete
 	if err := st.Delete(name); err != nil {
 		t.Error(err)

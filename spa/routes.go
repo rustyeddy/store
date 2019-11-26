@@ -51,6 +51,11 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 // A simple handler
-func handleHealth(w http.ReadRequest, r *http.Request) {
+func handleHealth(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]bool{"ok": true})
+}
+
+func handleStore(w http.ResponseWriter, r *http.Request) {
+	names := storage.List()
+	json.NewEncoder(w).Encode(names)
 }

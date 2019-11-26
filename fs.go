@@ -16,7 +16,7 @@ type FileStore struct {
 	Name     string // Name of the File store
 	Basepath string // Path to storage directory
 	Comment  string // Some useful comment
-	Items    []string
+	Names    []string
 }
 
 // UseFileStore creates and returns a new storage container.  If a dir
@@ -156,8 +156,8 @@ func (fs *FileStore) Save(name string, gobj interface{}) (err error) {
 // List will provide a list of all elements in storage
 func (fs *FileStore) List() (names []string) {
 
-	if fs.Items != nil {
-		return fs.Items
+	if fs.Names != nil {
+		return fs.Names
 	}
 
 	files, err := ioutil.ReadDir(fs.Basepath)
@@ -166,7 +166,7 @@ func (fs *FileStore) List() (names []string) {
 	}
 
 	for _, file := range files {
-		fs.Items = append(fs.Items, file.Name())
+		fs.Items = append(fs.Names, file.Name())
 	}
-	return fs.Items
+	return fs.Names
 }

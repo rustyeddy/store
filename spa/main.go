@@ -12,28 +12,32 @@ import (
 )
 
 var (
-	addr    string
-	name    string
+	addr *string
+	name *string
+	base *string
+
 	storage *store.FileStore
 )
 
 func init() {
 	name = flag.String("name", "default", "The name of the storage")
 	base = flag.String("base", "/srv/storge", "The base directory for the stores")
-
-	// TODO change to os.join
-	if storage, err = store.UseFileStore(filepath.Join(base, name)); err != nil {
-		log.Fatalln(err)
-	}
+	addr = flag.String("addr", "0.0.0.0:3333", "Address and port to run on")
 }
 
 func main() {
+	var err error
 	flag.Parse()
+
+	// TODO change to os.join
+	if storage, err = store.UseFileStore(filepath.Join(*base, *name)); err != nil {
+		log.Fatalln(err)
+	}
 
 	router := mux.NewRouter()
 
 	router.HandleFunc("/api/health", handleHealth)
-	router.HandleFunc("/api/store/{name}")
+	router.HandleFunc("/api/store/{name}", handleStore)
 
 	spa := spaHandler{staticPath: "pub", indexPath: "index.html"}
 	router.PathPrefix("/").Handler(spa)

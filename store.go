@@ -24,7 +24,7 @@ type Store interface {
 	Update(name string, obj interface{})
 	Delete(name string) error
 	Save(name, obj interface{})
-	List()
+	List() []string
 }
 
 // Configuration handles all configuration items

@@ -17,6 +17,18 @@ import (
 	"time"
 )
 
+/* TODO
+type Store interface {
+	Open()
+	Put(key string, message packets.ControlPacket)
+	Get(key string) packets.ControlPacket
+	All() []string
+	Del(key string)
+	Close()
+	Reset()
+}
+*/
+
 // Store defines how use this package
 type Store interface {
 	Create(name string, obj interface{}) (interface{}, error)
